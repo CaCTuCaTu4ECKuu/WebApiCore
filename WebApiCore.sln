@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30711.63
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiCore", "WebApiCore\WebApiCore.csproj", "{90816FE1-CB94-4601-8FC3-486706CE2FF0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiCore.Test", "WebApiCore.Test\WebApiCore.Test.csproj", "{1ABCEC66-004A-4615-919D-8FF044E4B80D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiCore.AspNetCore", "WebApiCore.AspNetCore\WebApiCore.AspNetCore.csproj", "{9F09C3F0-8363-4973-A699-8D68F63F1E27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiCore.AspNetCore", "WebApiCore.AspNetCore\WebApiCore.AspNetCore.csproj", "{9F09C3F0-8363-4973-A699-8D68F63F1E27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiCore.Swagger", "WebApiCore.Swagger\WebApiCore.Swagger.csproj", "{121B91EE-1DA8-4636-ACF8-74618E6E4192}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{9F09C3F0-8363-4973-A699-8D68F63F1E27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F09C3F0-8363-4973-A699-8D68F63F1E27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F09C3F0-8363-4973-A699-8D68F63F1E27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{121B91EE-1DA8-4636-ACF8-74618E6E4192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{121B91EE-1DA8-4636-ACF8-74618E6E4192}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{121B91EE-1DA8-4636-ACF8-74618E6E4192}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{121B91EE-1DA8-4636-ACF8-74618E6E4192}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

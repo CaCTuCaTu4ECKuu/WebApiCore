@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFramework>netstandard2.0</TargetFramework>
+	<Authors>CaCTuCaTu4ECKuu</Authors>
+	<Product>WebApiCore.Swagger</Product>
+	<Copyright>CaCTuCaTu4ECKuu</Copyright>
+	<NeutralLanguage>en</NeutralLanguage>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<Version>1.1.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebApiCore\WebApiCore.csproj" />
+  </ItemGroup>
+
+</Project>
