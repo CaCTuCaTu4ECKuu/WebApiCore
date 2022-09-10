@@ -7,9 +7,9 @@ using WebApiCore.ComponentModel;
 
 namespace WebApiCore.Swagger
 {
-    public static class MapAccountManagerTypesExtension
+    public static class MapStringEnumTypeExtension
     {
-        public static void MapAccountManagerType<TEnum>(this SwaggerGenOptions opt)
+        public static void MapStringEnumType<TEnum>(this SwaggerGenOptions opt)
             where TEnum : StringEnum<TEnum>, IEquatable<TEnum>
         {
             opt.MapType(typeof(StringEnum<TEnum>), () => new OpenApiSchema() { Type = "string" });
