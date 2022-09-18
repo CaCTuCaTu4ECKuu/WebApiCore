@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebApiCore.AspNetCore\WebApiCore.AspNetCore.csproj" />
     <ProjectReference Include="..\WebApiCore\WebApiCore.csproj" />
   </ItemGroup>
 
