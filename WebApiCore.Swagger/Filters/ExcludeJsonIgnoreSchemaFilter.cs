@@ -10,7 +10,7 @@ namespace WebApiCore.Swagger.Filters
     /// <summary>
     /// Remove properties marked with <see cref="JsonIgnoreAttribute"/> from schema
     /// </summary>
-    public class SwaggerExcludeJsonIgnoreSchemaFilter : ISchemaFilter
+    public class ExcludeJsonIgnoreSchemaFilter : ISchemaFilter
     {
         public void Apply(OpenApiSchema schema, SchemaFilterContext context)
         {
