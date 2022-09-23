@@ -42,7 +42,9 @@ namespace WebApiCore.AspNetCore.Middleware.OperationResultExceptionJsonWrapper
                 }
 				else
 				{
-					var opErr = new OperationError(_config.Default.ErrorCode, ex.Message ?? _config.Default.AlternativeErrorMessage);
+					var opErr = new OperationError(_config.Default.ErrorCode, _config.Default.ForceErrorMessage
+						? _config.Default.AlternativeErrorMessage
+						: ex.Message ?? _config.Default.AlternativeErrorMessage);
 					await SendResponse(context, opErr, _config.Default.ResponseStatusCode ?? StatusCodes.Status500InternalServerError);
 				}
 			}
