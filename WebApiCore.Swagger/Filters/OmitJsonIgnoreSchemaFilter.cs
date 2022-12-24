@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text.Json.Serialization;
 using System.Reflection;
 using Microsoft.OpenApi.Models;
@@ -20,7 +19,6 @@ namespace WebApiCore.Swagger.Filters
             var excludedProperties = context.Type.GetProperties()
                 .Where(t => t.GetCustomAttribute(typeof(JsonIgnoreAttribute), true) != null ||
                     t.GetCustomAttribute(typeof(Newtonsoft.Json.JsonIgnoreAttribute), true) != null);
-
 
             if (excludedProperties.Any())
             {
