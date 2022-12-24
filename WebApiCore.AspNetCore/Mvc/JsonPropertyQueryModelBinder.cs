@@ -10,6 +10,9 @@ using Newtonsoft.Json;
 
 namespace WebApiCore.AspNetCore.Mvc
 {
+    /// <summary>
+    /// Bind properties to model from query string
+    /// </summary>
     public class JsonPropertyQueryModelBinder : IModelBinder
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
@@ -33,7 +36,7 @@ namespace WebApiCore.AspNetCore.Mvc
                 }
             }
 
-            var model = Activator.CreateInstance(bindingContext.ModelType);
+            var model = Activator.CreateInstance(bindingContext.ModelType, true);
             foreach (var prop in modelProps)
             {
                 var val = bindingContext.ValueProvider.GetValue(prop.Value);
