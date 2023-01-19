@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+		<LangVersion>8.0</LangVersion>
+		<Authors>CaCTuCaTu4ECKuu</Authors>
+		<Product>WebApiCore.FluentValidation</Product>
+		<Copyright>CaCTuCaTu4ECKuu</Copyright>
+		<NeutralLanguage>en</NeutralLanguage>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Version>1.2.0</Version>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="FluentValidation" Version="11.4.0" />
+	</ItemGroup>
+	
+</Project>
