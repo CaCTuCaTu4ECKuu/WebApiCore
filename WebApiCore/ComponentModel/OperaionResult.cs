@@ -13,7 +13,7 @@ namespace WebApiCore.ComponentModel
 
 		[System.Text.Json.Serialization.JsonIgnore]
 		[Newtonsoft.Json.JsonIgnore]
-		public bool Succeeded { get; private set; }
+		public bool Succeeded { get; protected set; }
 
 		[JsonPropertyName("errors")]
 		[JsonProperty("errors")]
