@@ -4,6 +4,10 @@ using System.Linq.Expressions;
 
 namespace WebApiCore.ComponentModel
 {
+    /// <summary>
+    /// Позволяет узнать были ли установлены свойства класса.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class DeterminativePropertySet<T>
         where T : DeterminativePropertySet<T>
     {
