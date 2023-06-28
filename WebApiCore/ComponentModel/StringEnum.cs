@@ -9,7 +9,7 @@ namespace WebApiCore.ComponentModel
 {
     [DebuggerDisplay("{Name}")]
     [TypeConverter(typeof(Converters.StringEnumTypeConverter))]
-    public abstract class StringEnum<T> where T : StringEnum<T>, IEquatable<T>
+    public abstract class StringEnum<T> where T : StringEnum<T>, IEnumerable<T>, IEquatable<T>
     {
         private static readonly Dictionary<string, T> _possibleValues;
 

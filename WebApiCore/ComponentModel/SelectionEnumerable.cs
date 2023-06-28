@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -7,8 +8,8 @@ using Newtonsoft.Json;
 
 namespace WebApiCore.ComponentModel
 {
-    [DebuggerDisplay("[{Items.Length}] <- {Count}")]
-    public class SelectionEnumerable<T>
+    [DebuggerDisplay("[{Items.Length}] <- {TotalCount}")]
+    public class SelectionEnumerable<T> : IEnumerable<T>
     {
         private T[] _items;
 
@@ -41,5 +42,9 @@ namespace WebApiCore.ComponentModel
             TotalCount = items.Count();
             Items = items.ToArray();
         }
+
+        public IEnumerator<T> GetEnumerator() => ((IEnumerable<T>)Items).GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => Items.GetEnumerator();
     }
 }
