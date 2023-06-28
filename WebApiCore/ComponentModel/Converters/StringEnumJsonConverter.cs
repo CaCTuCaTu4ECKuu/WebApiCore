@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace WebApiCore.ComponentModel.Converters
 {
     public class StringEnumJsonConverter<T> : JsonConverter<StringEnum<T>>
-        where T : StringEnum<T>, IEquatable<T>
+        where T : StringEnum<T>, IEnumerable<T>, IEquatable<T>
     {
         public static readonly Type StringEnumType = typeof(StringEnum<>);
 
