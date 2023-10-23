@@ -40,7 +40,7 @@ namespace WebApiCore.AspNetCore.Mvc
             foreach (var prop in modelProps)
             {
                 var val = bindingContext.ValueProvider.GetValue(prop.Value);
-                if (val != null && val.Length > 0)
+                if (val.Length > 0)
                 {
                     TypeConverter converter;
                     if (prop.Key.PropertyType.IsArray)

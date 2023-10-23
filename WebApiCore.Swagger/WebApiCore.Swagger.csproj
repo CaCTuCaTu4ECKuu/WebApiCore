@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFramework>netstandard2.0</TargetFramework>
+	<TargetFramework>net6.0</TargetFramework>
 	<Authors>CaCTuCaTu4ECKuu</Authors>
 	<Product>WebApiCore.Swagger</Product>
 	<Copyright>CaCTuCaTu4ECKuu</Copyright>
 	<NeutralLanguage>en</NeutralLanguage>
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	<Version>1.2.0</Version>
+	<Version>1.4.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

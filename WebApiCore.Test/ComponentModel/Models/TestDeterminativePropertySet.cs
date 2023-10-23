@@ -2,8 +2,6 @@
 using System.Text.Json;
 using Newtonsoft.Json;
 
-using WebApiCore.ComponentModel;
-
 namespace WebApiCore.ComponentModel.Test.Models
 {
     public class TestDeterminativePropertySet : DeterminativePropertySet<TestDeterminativePropertySet>
