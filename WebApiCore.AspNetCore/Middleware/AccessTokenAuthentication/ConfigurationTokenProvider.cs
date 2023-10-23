@@ -11,9 +11,19 @@ namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication
 
         private readonly IConfiguration _config;
 
+        public string AuthenticationScheme { get; private set; } = "ConfigurationToken";
+
         public ConfigurationTokenProvider(IConfiguration config)
         {
             _config = config;
+        }
+        public ConfigurationTokenProvider(IConfiguration config, string authenticationScheme)
+        {
+            _config = config;
+            if (string.IsNullOrEmpty(authenticationScheme))
+                throw new ArgumentException("Authentication type is not defined", nameof(authenticationScheme));
+
+            AuthenticationScheme = authenticationScheme;
         }
 
         public ClaimsPrincipal GetTokenUser(string accessToken)
@@ -30,12 +40,12 @@ namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication
                 var rolesValue = _config[$"{CONFIGURATION_KEY}:{accessToken}:Roles"];
                 if (!string.IsNullOrEmpty(rolesValue))
                 {
-                    var roles = rolesValue.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                    var roles = rolesValue.Split(',');
                     foreach (var role in roles)
                         claims.Add(new Claim(ClaimTypes.Role, role.Trim().ToUpper()));
                 }
 
-                var identity = new ClaimsIdentity(claims, "Basic");
+                var identity = new ClaimsIdentity(claims, AuthenticationScheme);
                 return new ClaimsPrincipal(identity);
             }
 
