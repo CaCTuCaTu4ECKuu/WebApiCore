@@ -15,12 +15,13 @@ namespace WebApiCore.AspNetCore.ActionFilters
     [AttributeUsage(validOn: AttributeTargets.Class | AttributeTargets.Method)]
     public class RequireAccessTokenAttribute : Attribute, IAsyncActionFilter
     {
+        /// <summary>
+        /// Key of access token in GET or POST request
+        /// </summary>
         public string TokenKey { get; set; } = "access_token";
 
         public RequireAccessTokenAttribute()
-        {
-
-        }
+        { }
 
         public RequireAccessTokenAttribute(string tokenKey)
         {
