@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -92,7 +93,7 @@ namespace WebApiCore.AspNetCore
 		{
 			options.Converters.Add(new StringEnumJsonConverterFactory());
 
-			options.IgnoreNullValues = true;
+			options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 			options.WriteIndented = true;
 		}
 	}
