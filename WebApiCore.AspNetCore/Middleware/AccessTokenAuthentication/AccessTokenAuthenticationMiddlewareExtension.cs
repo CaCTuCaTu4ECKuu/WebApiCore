@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication;
 
-namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication
+namespace WebApiCore.AspNetCore
 {
     public static class AccessTokenAuthenticationMiddlewareExtension
     {
         /// <summary>
         /// Configure services required for <see cref="AccessTokenAuthenticationMiddleware"/> to work
         /// </summary>
-        /// <typeparam name="TTokenProvider">Service that will return User for HttpContext by provided token.</typeparam>
-        /// <param name="tokenProvider">Configured token provider instance</param>
-        /// <param name="tokenKey">Key of access token in GET or POST request</param>
-        public static AccessTokenAuthenticationConfiguration AddAccessTokenAuthentication<TTokenProvider>(this IServiceCollection services, TTokenProvider tokenProvider, string tokenKey)
+        /// <param name="tokenProvider">Configured token provider</param>
+        /// <param name="tokenKey">Key of access token for GET or POST request</param>
+        public static AccessTokenAuthenticationConfiguration AddAccessTokenAuthentication<TTokenProvider>(this IServiceCollection services, Func<IServiceProvider, TTokenProvider> tokenProvider, string tokenKey)
             where TTokenProvider : class, IAccessTokenProvider
         {
-            services.AddSingleton(tokenProvider);
+            services.TryAddSingleton<IAccessTokenProvider>(tokenProvider);
 
             var cfg = new AccessTokenAuthenticationConfiguration()
             {
@@ -28,31 +31,13 @@ namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication
         }
 
         /// <summary>
-        /// Configure services required for <see cref="AccessTokenAuthenticationMiddleware"/> to work
+        /// Configure services required for <see cref="AccessTokenAuthenticationMiddleware"/> to work using default access token key for requests
         /// </summary>
-        /// <typeparam name="TTokenProvider">Service that will return User for HttpContext by provided token.</typeparam>
-        /// <param name="tokenKey">Key of access token in GET or POST request</param>
-        public static AccessTokenAuthenticationConfiguration AddAccessTokenAuthentication<TTokenProvider>(this IServiceCollection services, string tokenKey)
-            where TTokenProvider : class, IAccessTokenProvider, new()
-        {
-            services.AddSingleton<TTokenProvider>();
-            var cfg = new AccessTokenAuthenticationConfiguration();
-            services.AddSingleton(cfg);
-            cfg.TokenKey = tokenKey;
-
-            return cfg;
-        }
-
-        public static AccessTokenAuthenticationConfiguration AddAccessTokenAuthentication<TTokenProvider>(this IServiceCollection services, TTokenProvider tokenProvider)
+        /// <param name="tokenProvider">Configured token provider</param>
+        public static AccessTokenAuthenticationConfiguration AddAccessTokenAuthentication<TTokenProvider>(this IServiceCollection services, Func<IServiceProvider, TTokenProvider> tokenProvider)
             where TTokenProvider : class, IAccessTokenProvider
         {
             return services.AddAccessTokenAuthentication(tokenProvider, AccessTokenAuthenticationConfiguration.DEFAULT_TOKEN_KEY);
-        }
-
-        public static AccessTokenAuthenticationConfiguration AddAccessTokenAuthentication<TTokenProvider>(this IServiceCollection services)
-            where TTokenProvider : class, IAccessTokenProvider, new()
-        {
-            return services.AddAccessTokenAuthentication<TTokenProvider>(AccessTokenAuthenticationConfiguration.DEFAULT_TOKEN_KEY);
         }
 
         public static IApplicationBuilder UseAccessTokenAuthentication(this IApplicationBuilder app)
