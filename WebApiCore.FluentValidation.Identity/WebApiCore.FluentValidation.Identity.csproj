@@ -8,20 +8,16 @@
 		<Copyright>CaCTuCaTu4ECKuu</Copyright>
 		<NeutralLanguage>en</NeutralLanguage>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.2.0</Version>
+		<Version>0.3.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="FluentValidation" Version="11.4.0" />
-	  <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.13" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'NET6.0'">
+		<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.2" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="11.4.0" />
 	</ItemGroup>
 	
 </Project>
