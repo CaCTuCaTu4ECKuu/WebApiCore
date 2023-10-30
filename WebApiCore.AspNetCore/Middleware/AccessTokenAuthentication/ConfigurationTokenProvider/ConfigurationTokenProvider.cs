@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
-namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication
+namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication.ConfigurationTokenProvider
 {
     public class ConfigurationTokenProvider : IAccessTokenProvider
     {
@@ -28,10 +30,12 @@ namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication
 
         public ClaimsPrincipal GetTokenUser(string accessToken)
         {
-            var token = _config.GetSection($"{CONFIGURATION_KEY}:{accessToken}");
-            if (token.Exists())
+            if (TokenExists(accessToken))
             {
-                var claims = new List<Claim>();
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, accessToken)
+                };
 
                 var uName = _config[$"{CONFIGURATION_KEY}:{accessToken}:NameAlias"];
                 if (!string.IsNullOrEmpty(uName))
@@ -54,7 +58,16 @@ namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication
 
         public bool TokenExists(string accessToken)
         {
-            return _config.GetSection($"{CONFIGURATION_KEY}:{accessToken}").Exists();
+            var tokens = _config.GetSection(CONFIGURATION_KEY);
+            if (tokens.Exists())
+                return tokens.AsEnumerable().Any(e => e.Key == $"{CONFIGURATION_KEY}:{accessToken}");
+
+            return false;
+        }
+
+        public Task<ClaimsPrincipal> GetTokenUserAsync(string accessToken)
+        {
+            return Task.FromResult(GetTokenUser(accessToken));
         }
     }
 }

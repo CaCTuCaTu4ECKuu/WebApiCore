@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication;
 
-namespace WebApiCore.AspNetCore
+namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication.ConfigurationTokenProvider
 {
     public static class ConfigurationTokenProviderExtension
     {
