@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication
@@ -19,7 +22,7 @@ namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication
             _tokenProvider = tokenProvider;
         }
 
-        public void Invoke(HttpContext context)
+        public async Task InvokeAsync(HttpContext context)
         {
             string token = null;
             if (context.Request.Method == "GET")
@@ -35,10 +38,24 @@ namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication
 
             if (token != null && _tokenProvider.TokenExists(token))
             {
-                context.User = _tokenProvider.GetTokenUser(token);
+                var user = await _tokenProvider.GetTokenUserAsync(token)
+                    .ConfigureAwait(false);
+
+                if (context.User != null)
+                {
+                    if (user != null)
+                    {
+                        List<ClaimsIdentity> identities = new List<ClaimsIdentity>(context.User.Identities);
+                        identities.AddRange(user.Identities);
+
+                        context.User = new ClaimsPrincipal(identities);
+                    }
+                }
+                else
+                    context.User = user;
             }
 
-            _next(context);
+            await _next(context);
         }
     }
 }
