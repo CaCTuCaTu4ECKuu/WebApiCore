@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication
 {
@@ -9,5 +10,7 @@ namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication
         bool TokenExists(string accessToken);
 
         ClaimsPrincipal GetTokenUser(string accessToken);
+
+        Task<ClaimsPrincipal> GetTokenUserAsync(string accessToken);
     }
 }
