@@ -38,8 +38,8 @@ namespace WebApiCore.AspNetCore.Middleware.OperationResultExceptionJsonWrapper
         {
             _exceptions = new Dictionary<Type, OperationErrorConfigurationEntry>();
 
-            Default = new OperationErrorConfigurationEntry(StatusCodes.Status500InternalServerError, BasicApiErrorCodes.UNKNOWN_ERROR, "Unknown Server Error", forceAlternativeErrorMsg);
-            NotImplemented = new OperationErrorConfigurationEntry(StatusCodes.Status501NotImplemented, BasicApiErrorCodes.NOT_IMPLEMENTED, "Not Implemented", forceAlternativeErrorMsg);
+            Default = new OperationErrorConfigurationEntry(BasicApiErrorCodes.UNKNOWN_ERROR, StatusCodes.Status500InternalServerError, "Unknown Server Error", forceAlternativeErrorMsg);
+            NotImplemented = new OperationErrorConfigurationEntry(BasicApiErrorCodes.NOT_IMPLEMENTED, StatusCodes.Status501NotImplemented, "Not Implemented", forceAlternativeErrorMsg);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace WebApiCore.AspNetCore.Middleware.OperationResultExceptionJsonWrapper
         /// <param name="forceErrorMsg">Force alternative error message instead exception error message</param>
         public OperationResultExceptionJsonWrapperConfiguration SetExceptionWrapper(Type exceptionType, int statusCode, int errorCode, string alternativeMsg, bool forceErrorMsg = false)
         {
-            var cfg = new OperationErrorConfigurationEntry(statusCode, errorCode, alternativeMsg, forceErrorMsg);
+            var cfg = new OperationErrorConfigurationEntry(errorCode, statusCode, alternativeMsg, forceErrorMsg);
             SetExceptionWrapper(exceptionType, cfg);
             
             return this;
@@ -82,7 +82,7 @@ namespace WebApiCore.AspNetCore.Middleware.OperationResultExceptionJsonWrapper
             {
                 return exceptionMsgParser((T)ex, errorCodes);
             });
-            var cfg = new OperationErrorConfigurationEntry(statusCode, errorCode, exParser);
+            var cfg = new OperationErrorConfigurationEntry(errorCode, statusCode, exParser);
             SetExceptionWrapper(typeof(T), cfg);
 
             return this;

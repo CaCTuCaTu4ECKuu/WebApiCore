@@ -15,12 +15,12 @@ namespace WebApiCore.AspNetCore.Middleware.OperationResultExceptionJsonWrapper
         /// <summary>
         /// <see cref="StatusCodes"/> for HTTP response
         /// </summary>
-        public int? ResponseStatusCode { get; }
+        public int? ResponseStatusCode { get; } = null;
 
         /// <summary>
         /// Error message for <see cref="OperationError"/> if exception error message is not presented
         /// </summary>
-        public string AlternativeErrorMessage { get; }
+        public string AlternativeErrorMessage { get; } = "";
 
         /// <summary>
         /// Use <see cref="AlternativeErrorMessage"/> instead exception error message
