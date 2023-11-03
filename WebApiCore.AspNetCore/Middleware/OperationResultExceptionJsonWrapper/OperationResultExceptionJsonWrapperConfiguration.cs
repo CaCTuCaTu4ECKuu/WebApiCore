@@ -47,12 +47,14 @@ namespace WebApiCore.AspNetCore.Middleware.OperationResultExceptionJsonWrapper
         /// </summary>
         /// <param name="exceptionType"></param>
         /// <param name="config"></param>
-        public void SetExceptionWrapper(Type exceptionType, OperationErrorConfigurationEntry config)
+        public OperationResultExceptionJsonWrapperConfiguration SetExceptionWrapper(Type exceptionType, OperationErrorConfigurationEntry config)
         {
             if (config != null)
                 _exceptions[exceptionType] = config;
             else if (_exceptions.ContainsKey(exceptionType))
                 _exceptions.Remove(exceptionType);
+
+            return this;
         }
 
         /// <summary>Add exception wrapper configuration</summary>
@@ -60,10 +62,12 @@ namespace WebApiCore.AspNetCore.Middleware.OperationResultExceptionJsonWrapper
         /// <param name="errorCode">Error code for <see cref="OperationError"/></param>
         /// <param name="alternativeMsg">Error message if exception error message is not presented</param>
         /// <param name="forceErrorMsg">Force alternative error message instead exception error message</param>
-        public void SetExceptionWrapper(Type exceptionType, int statusCode, int errorCode, string alternativeMsg, bool forceErrorMsg = false)
+        public OperationResultExceptionJsonWrapperConfiguration SetExceptionWrapper(Type exceptionType, int statusCode, int errorCode, string alternativeMsg, bool forceErrorMsg = false)
         {
             var cfg = new OperationErrorConfigurationEntry(statusCode, errorCode, alternativeMsg, forceErrorMsg);
             SetExceptionWrapper(exceptionType, cfg);
+            
+            return this;
         }
 
         /// <summary>Add exception wrapper configuration</summary>
@@ -71,7 +75,7 @@ namespace WebApiCore.AspNetCore.Middleware.OperationResultExceptionJsonWrapper
         /// <param name="statusCode"><see cref="StatusCodes"/> for HTTP response</param>
         /// <param name="errorCode">Error code for <see cref="OperationError"/></param>
         /// <param name="exceptionMsgParser">Exception message parser for <see cref="OperationError.Message"/></param>
-        public void SetExceptionWrapper<T>(int statusCode, int errorCode, Func<T, IApiErrorCodes, string> exceptionMsgParser)
+        public OperationResultExceptionJsonWrapperConfiguration SetExceptionWrapper<T>(int statusCode, int errorCode, Func<T, IApiErrorCodes, string> exceptionMsgParser)
             where T : Exception
         {
             var exParser = new Func<Exception, IApiErrorCodes, string>((ex, errorCodes) =>
@@ -80,6 +84,8 @@ namespace WebApiCore.AspNetCore.Middleware.OperationResultExceptionJsonWrapper
             });
             var cfg = new OperationErrorConfigurationEntry(statusCode, errorCode, exParser);
             SetExceptionWrapper(typeof(T), cfg);
+
+            return this;
         }
     }
 }
