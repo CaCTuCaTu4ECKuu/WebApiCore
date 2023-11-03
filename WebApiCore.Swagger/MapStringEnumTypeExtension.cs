@@ -12,7 +12,7 @@ namespace WebApiCore.Swagger
         public static void MapStringEnumType<TEnum>(this SwaggerGenOptions opt)
             where TEnum : StringEnum<TEnum>, IEquatable<TEnum>
         {
-            opt.MapType(typeof(StringEnum<TEnum>), () => new OpenApiSchema() { Type = "string" });
+            opt.MapType(typeof(TEnum), () => new OpenApiSchema() { Type = "string" });
         }
     }
 }
