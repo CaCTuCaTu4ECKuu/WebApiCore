@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication;
@@ -11,6 +12,35 @@ namespace WebApiCore.AspNetCore
 {
     public static class AccessTokenAuthenticationMiddlewareExtension
     {
+        /// <summary>
+        /// Extract and return token key if it was provided within the request 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="tokenKey">Key to search Access Token</param>
+        /// <returns>Access Token or null of key was not provided</returns>
+        public static string GetAccessToken(this HttpContext context, string tokenKey = "access_token")
+        {
+            string token = null;
+            if (context.Request.Method == "GET")
+            {
+                if (context.Request.Query.ContainsKey(tokenKey))
+                {
+                    if (context.Request.Query.TryGetValue(tokenKey, out var extractedApiKey))
+                        token = extractedApiKey.ToString();
+                }
+            }
+            else
+            {
+                if (context.Request.Headers.ContainsKey(tokenKey))
+                {
+                    if (context.Request.Headers.TryGetValue(tokenKey, out var extractedApiKey))
+                        token = extractedApiKey.ToString();
+                }
+            }
+
+            return token;
+        }
+
         /// <summary>
         /// Configure services required for <see cref="AccessTokenAuthenticationMiddleware"/> to work
         /// </summary>
