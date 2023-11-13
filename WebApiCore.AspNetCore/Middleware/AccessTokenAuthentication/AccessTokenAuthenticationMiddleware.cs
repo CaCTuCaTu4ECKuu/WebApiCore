@@ -24,35 +24,36 @@ namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication
 
         public async Task InvokeAsync(HttpContext context)
         {
-            string token = null;
-            if (context.Request.Method == "GET")
-            {
-                if (context.Request.Query.TryGetValue(_ataConfig.TokenKey, out var extractedApiKey))
-                    token = extractedApiKey.ToString();
-            }
-            else
-            {
-                if (context.Request.Headers.TryGetValue(_ataConfig.TokenKey, out var extractedApiKey))
-                    token = extractedApiKey.ToString();
-            }
+            string token = context.GetAccessToken(_ataConfig.TokenKey);
 
-            if (token != null && _tokenProvider.TokenExists(token))
+            if (token != null)
             {
-                var user = await _tokenProvider.GetTokenUserAsync(token)
-                    .ConfigureAwait(false);
-
-                if (context.User != null)
+                if (_tokenProvider.TokenExists(token))
                 {
-                    if (user != null)
-                    {
-                        List<ClaimsIdentity> identities = new List<ClaimsIdentity>(context.User.Identities);
-                        identities.AddRange(user.Identities);
+                    var user = await _tokenProvider.GetTokenUserAsync(token)
+                        .ConfigureAwait(false);
 
-                        context.User = new ClaimsPrincipal(identities);
+                    if (context.User != null)
+                    {
+                        if (user != null)
+                        {
+                            List<ClaimsIdentity> identities = new List<ClaimsIdentity>(context.User.Identities);
+                            identities.AddRange(user.Identities);
+
+                            context.User = new ClaimsPrincipal(identities);
+                        }
                     }
+                    else
+                        context.User = user;
                 }
-                else
-                    context.User = user;
+                else if (_ataConfig.ThrowOnInvalidAccessToken)
+                {
+                    throw new NotImplementedException("Access Token is invalid");
+                }
+            }
+            else if (_ataConfig.ThrowOnTokenNotProvided)
+            {
+                throw new NotImplementedException("Access Token not provided");
             }
 
             await _next(context);

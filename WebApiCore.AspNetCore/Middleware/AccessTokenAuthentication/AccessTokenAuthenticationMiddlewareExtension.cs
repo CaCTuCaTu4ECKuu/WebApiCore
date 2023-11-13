@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
+using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication;
+using WebApiCore.AspNetCore.Middleware.OperationResultExceptionJsonWrapper;
 
 namespace WebApiCore.AspNetCore
 {
@@ -39,6 +38,12 @@ namespace WebApiCore.AspNetCore
             }
 
             return token;
+        }
+
+        public static OperationResultExceptionJsonWrapperConfiguration SetAccessTokenExceptionsWrapper(this OperationResultExceptionJsonWrapperConfiguration config)
+        {
+            config.SetExceptionWrapper<AccessTokenException>();
+            return config;
         }
 
         /// <summary>

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
-using WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication;
 
 namespace WebApiCore.AspNetCore.Middleware.AccessTokenAuthentication.ConfigurationTokenProvider
 {
